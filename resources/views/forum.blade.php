@@ -19,10 +19,10 @@
                     			{{ str_limit($d->content, 50) }}
                     		</div>
                     		<div class="panel-footer">
-                    			<p>
-                    				{{ $d->replies->count()}} Replies
-                    			</p>
-                    		</div>
+                                <span>
+                                    {{ $d->replies->count()}} Replies <a href="{{ route('channel', ['slug'=> $d->channel->slug])}}" class="pull-right btn btn-default btn-xs">{{ $d->channel->title }}</a>
+                                </span>
+                            </div>
                     	</div>
                     @endforeach
                     <div class="text-center">{{ $discussions->links() }}</div>

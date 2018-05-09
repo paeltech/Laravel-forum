@@ -47,7 +47,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -82,8 +82,9 @@
                     </div>
                     <div class="panel-body">
                         <ul class="list-group">
+                            <li class="list-group-item"> <a href="{{ route('forum') }}">All</a></li>
                             @foreach($channels as $channel)
-                                <li class="list-group-item"> {{ $channel->title }}</li>
+                                <li class="list-group-item"> <a href="{{ route('channel', ['slug'=> $channel->slug]) }}">{{ $channel->title }}</a></li>
                             @endforeach
                         </ul>
                     </div>

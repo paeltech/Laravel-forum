@@ -29,7 +29,7 @@ class DiscussionsController extends Controller
      */
     public function create()
     {
-        return view('discuss');
+        return view('discussions.create');
     }
 
     /**
@@ -94,6 +94,7 @@ class DiscussionsController extends Controller
 
         return View('discussions.show')->with('discussion', Discussion::where('slug', $slug)->first());
     }
+
 
     /**
      * Show the form for editing the specified resource.

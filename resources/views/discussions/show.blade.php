@@ -5,18 +5,22 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <img src="{{ $discussion->user->avatar }}" alt="avatar" width="70px" height="70px" class="img-circle">&nbsp; &nbsp;
-                    <span>{{ $discussion->user->name }}, &nbsp; <b>{{ $discussion->created_at->diffForHumans() }}</b></span>
-
-                    <!-- <a href="{{ route('discussion', ['slug'=> $discussion->slug]) }}"class="btn btn-default pull-right">View discussion</a> -->
+                    <span>{{ $discussion->user->name }}, &nbsp; <b>{{ $discussion->created_at->diffForHumans() }}</b>
+                        @if($discussion->is_being_watched_by_auth_user())
+                            <a href="{{ route('discussion.unwatch', ['id' => $discussion->id]) }}" class="btn btn-default btn-xs pull-right">Unfollow the discussion</a>
+                        @else
+                            <a href="{{ route('discussion.watch', ['id' => $discussion->id]) }}" class="btn btn-default btn-xs pull-right">Follow the discussion</a>
+                        @endif
+                    </span>
                 </div>
                 <div class="panel-body">
                     <h4>{{ $discussion->title }}</h4>
                     {{ str_limit($discussion->content, 50) }}
                 </div>
                 <div class="panel-footer">
-                    <p>
-                        {{ $discussion->replies->count()}} Replies
-                    </p>
+                    <span>
+                        {{ $discussion->replies->count()}} Replies <a href="{{ route('channel', ['slug'=> $discussion->channel->slug])}}" class="pull-right btn btn-default btn-xs">{{ $discussion->channel->title }}</a>
+                    </span>
                 </div>
         </div>
 
@@ -41,8 +45,6 @@
                     </div>
                 @endforeach
 
-
-            
             <div class="panel-default">
                 <div class="panel-body">
                     <form action="{{ route('discussion.reply', ['id'=> $discussion->id]) }}" method="POST">
@@ -54,7 +56,11 @@
                             </textarea>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-default" type="submit">Leave a reply</button>
+                            @if(Auth::check())
+                                <button class="btn btn-default" type="submit">Leave a reply</button>
+                            @else
+                                <a href="{{ url('/login') }}" class="btn btn-default">Login to Leave a reply</a>
+                            @endif
                         </div>
                     </form>
                 </div>

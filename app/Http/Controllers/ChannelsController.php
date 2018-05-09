@@ -44,7 +44,8 @@ class ChannelsController extends Controller
         ]);
 
         Channel::create([
-            'title' => $request->channel
+            'title' => $request->channel,
+            'slug' => str_slug($request->channel)
         ]);
 
         Session::flash('success', 'Channel created');
@@ -60,7 +61,7 @@ class ChannelsController extends Controller
      */
     public function show($id)
     {
-        //
+        #return view('channels.show')->with('channel', Channel::where('slug', $slug));
     }
 
     /**
